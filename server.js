@@ -1,5 +1,7 @@
 const express = require('express');
+const res = require('express/lib/response');
 const mysql = require('mysql2');
+// const inputCheck = require('./utils/inputCheck');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -33,7 +35,7 @@ app.get('/api/department', (req, res) => {
     });
 });
 
-app.get('/api/department/:id', (req, res) {
+app.get('/api/department/:id', (req, res) => {
     const sql = `SELECT * FROM department WHERE id = ?`;
     const params = [req.params.id];
 
@@ -46,7 +48,7 @@ app.get('/api/department/:id', (req, res) {
             message: 'success',
             data: row
         });
-    });
+    })
 });
 
 // delete a department
@@ -54,7 +56,7 @@ app.delete('/api/department/:id', (req, res) => {
     const sql = `DELETE FROM department WHERE id ?`;
     const params = [req.params.id];
 
-    db.query(sq., params, (err, result) => {
+    db.query(sql, params, (err, result) => {
         if (err) {
             res.statusMessage(400).json({ error: res.message });
         } else if (!result.affectedRows) {
@@ -68,6 +70,29 @@ app.delete('/api/department/:id', (req, res) => {
                 id: req.params.id
             });
         }
+    });
+});
+
+app.post('/api/role', ({ body }, res) => {
+    const errors = inputCheck(body, 'title', 'salary', 'department_id');
+    if (errors) {
+        res.status(400).json({ error: errors });
+        return;
+    }
+
+    const sql = `INSERT INTO role (title, salary, department_id)
+      VALUES (?,?,?)`;
+    const params = [body.title, body.salary, body.department_id];
+
+    db.query(sql, params, (err, result) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: body
+        });
     });
 });
 
