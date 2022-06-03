@@ -1,0 +1,27 @@
+{
+  "name": "furry-octo-winner",
+  "version": "1.0.0",
+  "description": "an employee tracker cms",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maddnty/furry-octo-winner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maddnty/furry-octo-winner/issues"
+  },
+  "homepage": "https://github.com/maddnty/furry-octo-winner#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
