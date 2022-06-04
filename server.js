@@ -1,7 +1,6 @@
 const express = require('express');
 const res = require('express/lib/response');
 const mysql = require('mysql2');
-// const inputCheck = require('./utils/inputCheck');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -53,12 +52,12 @@ app.get('/api/department/:id', (req, res) => {
 
 // delete a department
 app.delete('/api/department/:id', (req, res) => {
-    const sql = `DELETE FROM department WHERE id ?`;
+    const sql = `DELETE FROM department WHERE id = ?`;
     const params = [req.params.id];
 
     db.query(sql, params, (err, result) => {
         if (err) {
-            res.statusMessage(400).json({ error: res.message });
+            res.status(400).json({ error: res.message });
         } else if (!result.affectedRows) {
             res.json({
                 message: 'Candidate not found'
